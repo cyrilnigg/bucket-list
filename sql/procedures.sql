@@ -58,7 +58,7 @@ DELIMITER ;
 
 USE `BucketList`;
 DROP procedure IF EXISTS `sp_GetWishByUser`;
- 
+
 DELIMITER $$
 USE `BucketList`$$
 CREATE PROCEDURE `sp_GetWishByUser` (
@@ -67,12 +67,12 @@ IN p_user_id bigint
 BEGIN
     select * from tbl_wish where wish_user_id = p_user_id;
 END$$
- 
+
 DELIMITER ;
 
 
 DELIMITER $$
- 
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_GetWishById`(
 IN p_wish_id bigint,
 In p_user_id bigint
@@ -80,6 +80,19 @@ In p_user_id bigint
 BEGIN
 select * from tbl_wish where wish_id = p_wish_id and wish_user_id = p_user_id;
 END$$
+
+
+DELIMITER $$
+USE `BucketList`$$
+CREATE PROCEDURE `sp_deleteWish` (
+IN p_wish_id bigint,
+IN p_user_id bigint
+)
+BEGIN
+delete from tbl_wish where wish_id = p_wish_id and wish_user_id = p_user_id;
+END$$
+ 
+DELIMITER ;
 
 --Alter the length of columns if nessary
 ALTER TABLE tbl_user MODIFY user_username VARCHAR(255);

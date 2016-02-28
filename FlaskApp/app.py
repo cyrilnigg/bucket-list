@@ -179,16 +179,12 @@ def validateLogin():
         _username = request.form['inputEmail']
         _password = request.form['inputPassword']
 
-
-
         # connect to mysql
 
         con = mysql.connect()
         cursor = con.cursor()
         cursor.callproc('sp_validateLogin',(_username,))
         data = cursor.fetchall()
-
-
 
 
         if len(data) > 0:
@@ -219,7 +215,6 @@ def signUp():
         if _name and _email and _password:
 
             # All Good, let's call MySQL
-
             conn = mysql.connect()
             cursor = conn.cursor()
             _hashed_password = generate_password_hash(_password)
@@ -228,7 +223,7 @@ def signUp():
 
             if len(data) is 0:
                 conn.commit()
-                return json.dumps({'message':'User created successfully !'})
+                return redirect('/userHome')
             else:
                 return json.dumps({'error':str(data[0])})
         else:
